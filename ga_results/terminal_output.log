@@ -1,0 +1,82 @@
+==============================================================================
+THÍ NGHIỆM GA – TỐI ƯU TF-IDF + LOGISTIC REGRESSION (DT51)
+==============================================================================
+Dữ liệu: 264 câu / 12 intent -> mẫu 251 -> Train 175 / Test 76
+Thư mục kết quả: C:\Study\UNIVERSITY\Nam4-HK1\TriTueNhanTao\BaoCaoCuoiKy\MyProject\ga_results
+
+[1/4] Tái lập baseline (Logistic Regression mặc định, 7-fold CV trên Train)...
+    Baseline CV Macro F1 = 0.7782 +/- 0.0628 | từng fold: [0.6694, 0.8056, 0.781, 0.781, 0.7246, 0.8, 0.8861]
+
+[2/4] Chạy GA: 40 cá thể, 12 thế hệ, đột biến 0.01, lai ghép 0.8, elite 2, tournament 3
+Khởi tạo quần thể: 40 cá thể (đột biến 0.01, lai ghép 0.8, elite 2, seed 45116)
+[Gen 00] best=0.7865 global=0.7865 mean=0.7175 std=0.1044 unique=40 t=5.45s | 7-2-0-1-1
+[Gen 01] best=0.7865 global=0.7865 mean=0.7658 std=0.0171 unique=53 t=7.71s | 7-2-0-1-1
+[Gen 02] best=0.7865 global=0.7865 mean=0.7707 std=0.0170 unique=62 t=9.35s | 7-2-0-1-1
+[Gen 03] best=0.7865 global=0.7865 mean=0.7785 std=0.0077 unique=73 t=12.03s | 7-2-0-1-1
+[Gen 04] best=0.7865 global=0.7865 mean=0.7835 std=0.0049 unique=76 t=12.95s | 7-2-0-1-1
+[Gen 05] best=0.7865 global=0.7865 mean=0.7862 std=0.0012 unique=76 t=12.95s | 7-2-0-1-1
+[Gen 06] best=0.7865 global=0.7865 mean=0.7865 std=0.0000 unique=77 t=13.36s | 7-2-0-1-1
+[Gen 07] best=0.7865 global=0.7865 mean=0.7827 std=0.0153 unique=79 t=13.85s | 7-2-0-1-1
+[Gen 08] best=0.7865 global=0.7865 mean=0.7860 std=0.0024 unique=79 t=13.85s | 7-2-0-1-1
+[Gen 09] best=0.7865 global=0.7865 mean=0.7862 std=0.0022 unique=79 t=13.85s | 7-2-0-1-1
+[Gen 10] best=0.7865 global=0.7865 mean=0.7865 std=0.0000 unique=79 t=13.85s | 7-2-0-1-1
+[Gen 11] best=0.7865 global=0.7865 mean=0.7865 std=0.0000 unique=79 t=13.85s | 7-2-0-1-1
+Hoàn tất sau 12 thế hệ, 79 cấu hình duy nhất, 13.85 giây. Best CV Macro F1 = 0.7865
+
+    Kết thúc: 12 thế hệ, 79 cấu hình duy nhất / 480 lượt đánh giá, thời gian 13.85s
+    Lý do dừng: max_generations
+    Best chromosome: 7-2-0-1-1
+    Best params: {'C': 20.0, 'ngram_range': (1, 3), 'min_df': 1, 'sublinear_tf': True, 'class_weight': 'balanced'}
+    Best CV Macro F1 = 0.7865 +/- 0.0647
+
+[3/4] Huấn luyện lại trên toàn bộ Train và đánh giá trên Test...
+    Đã lưu mô hình GA: Models\ga_best_model.joblib
+    Mô hình baseline vẫn giữ nguyên: Models\best_model.joblib (tồn tại)
+
+[4/4] Ghi bằng chứng thí nghiệm...
+
+==============================================================================
+BẢNG SO SÁNH BASELINE vs GA (cùng fold CV, cùng tập Test)
+==============================================================================
+Chỉ số                      Baseline          GA           Δ
+------------------------------------------------------------
+CV Macro F1 (mean)            0.7782      0.7865     +0.0083
+CV Macro F1 (std)             0.0628      0.0647     +0.0020
+Test Accuracy                 0.8026      0.8158     +0.0132
+Test Macro F1                 0.7962      0.8115     +0.0153
+Test Weighted F1              0.7979      0.8119     +0.0139
+
+So sánh cặp theo fold: Δ TB = +0.0083, t = 0.627, p = 0.5535 -> KHÔNG có ý nghĩa thống kê ở alpha = 0.05 (GA tốt hơn 2/7 fold, kém hơn 3/7 fold)
+
+Chỉ số theo từng intent (Test):
+         intent  support  precision_baseline  recall_baseline  f1_baseline  precision_ga  recall_ga  f1_ga  delta_f1
+ atm_withdrawal        6              1.0000           0.3333       0.5000        1.0000     0.8333 0.9091    0.4091
+   banking_fees        6              1.0000           0.8333       0.9091        1.0000     0.5000 0.6667   -0.2424
+     debit_card        6              0.5556           0.8333       0.6667        0.5556     0.8333 0.6667    0.0000
+forgot_password        6              0.8333           0.8333       0.8333        0.8333     0.8333 0.8333    0.0000
+  fraud_warning        6              1.0000           0.5000       0.6667        1.0000     0.5000 0.6667    0.0000
+      loan_info        6              1.0000           1.0000       1.0000        0.8571     1.0000 0.9231   -0.0769
+      lost_card        7              0.8333           0.7143       0.7692        0.6667     0.5714 0.6154   -0.1538
+ mobile_banking        6              0.6000           1.0000       0.7500        0.6667     1.0000 0.8000    0.0500
+   open_account        7              0.7500           0.8571       0.8000        0.8571     0.8571 0.8571    0.0571
+   savings_info        7              1.0000           1.0000       1.0000        1.0000     1.0000 1.0000    0.0000
+ transfer_issue        7              0.6667           0.8571       0.7500        0.7500     0.8571 0.8000    0.0500
+ transfer_limit        6              1.0000           0.8333       0.9091        1.0000     1.0000 1.0000    0.0909
+
+Số câu Test dự đoán sai: baseline 15 | GA 14
+
+File đã ghi:
+  - ga_results/baseline_confusion_matrix.png (176516 bytes)
+  - ga_results/environment.txt (389 bytes)
+  - ga_results/ga_best_parameters.json (1220 bytes)
+  - ga_results/ga_classification_report.csv (777 bytes)
+  - ga_results/ga_comparison.csv (255 bytes)
+  - ga_results/ga_confusion_matrix.png (173974 bytes)
+  - ga_results/ga_fitness_curve.png (85965 bytes)
+  - ga_results/ga_fitness_history.csv (3052 bytes)
+  - ga_results/ga_metrics.json (7334 bytes)
+  - ga_results/ga_run_config.json (4213 bytes)
+  - ga_results/ga_trials.csv (12247 bytes)
+
+Tổng thời gian script: 14.05s
+==============================================================================

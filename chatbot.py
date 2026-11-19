@@ -1,4 +1,5 @@
 import json
+import os
 import re
 from pathlib import Path
 
@@ -35,7 +36,35 @@ MODEL_CANDIDATES = [
     BASE_DIR / "Models" / "best_model.joblib",
     BASE_DIR / "best_model.joblib",
 ]
-model_path = next((path for path in MODEL_CANDIDATES if path.is_file()), None)
+
+# Biến môi trường tuỳ chọn để chạy thử mô hình tối ưu bằng GA mà không đổi
+# mặc định của chatbot. Ví dụ (PowerShell):
+#   $env:BANKAI_MODEL_PATH = "Models/ga_best_model.joblib"
+MODEL_ENV_VAR = "BANKAI_MODEL_PATH"
+
+
+def resolve_model_path():
+    """Trả về đường dẫn mô hình sẽ dùng, hoặc None nếu không tìm thấy.
+
+    Mặc định vẫn là ``best_model.joblib`` của baseline. Chỉ khi biến môi
+    trường ``BANKAI_MODEL_PATH`` được đặt, chatbot mới dùng mô hình khác
+    (ví dụ ``Models/ga_best_model.joblib`` do ``train_ga.py`` tạo ra).
+    """
+    override = os.environ.get(MODEL_ENV_VAR, "").strip()
+    if override:
+        candidate = Path(override)
+        if not candidate.is_absolute():
+            candidate = BASE_DIR / candidate
+        if not candidate.is_file():
+            raise FileNotFoundError(
+                f"{MODEL_ENV_VAR} trỏ tới tệp không tồn tại: {candidate}"
+            )
+        return candidate
+
+    return next((path for path in MODEL_CANDIDATES if path.is_file()), None)
+
+
+model_path = resolve_model_path()
 if model_path is None:
     raise FileNotFoundError(
         "Không tìm thấy best_model.joblib. Hãy chạy train.py và kiểm tra "
@@ -135,6 +164,7 @@ if __name__ == "__main__":
     print("=== CHATBOT HỖ TRỢ KHÁCH HÀNG NGÂN HÀNG ===")
     print("Đang dùng mô hình:", model_path)
     print(f"Ngưỡng thử nghiệm fallback: {MIN_CONFIDENCE:.2f}")
+    print(f"Tuỳ chọn mô hình GA: đặt {MODEL_ENV_VAR}=Models/ga_best_model.joblib")
     print("Gõ 'thoat' để kết thúc. Không nhập OTP/PIN/mật khẩu thật.")
 
     while True:

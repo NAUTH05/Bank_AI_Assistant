@@ -15,12 +15,6 @@ def reply(message, history):
 demo = gr.ChatInterface(
     fn=reply,
     title="BankAI - Chatbot hỗ trợ ngân hàng",
-    description="Chatbot hỗ trợ giải đáp các câu hỏi ngân hàng bằng tiếng Việt. Đây là dự án mô phỏng phục vụ học tập."
-)
-
-demo = gr.ChatInterface(
-    fn=reply,
-    title="BankAI - Chatbot hỗ trợ ngân hàng",
     description="Chatbot ngân hàng tiếng Việt - Dự án DT51.",
     examples=[
         "Tôi muốn mở tài khoản ngân hàng",

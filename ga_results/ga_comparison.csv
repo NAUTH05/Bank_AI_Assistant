@@ -1,0 +1,6 @@
+﻿metric,baseline,ga,delta,delta_percent
+cv_macro_f1_mean,0.7782,0.7865,0.0083,1.06
+cv_macro_f1_std,0.0628,0.0647,0.002,3.11
+test_accuracy,0.8026,0.8158,0.0132,1.64
+test_macro_f1,0.7962,0.8115,0.0153,1.93
+test_weighted_f1,0.7979,0.8119,0.0139,1.74

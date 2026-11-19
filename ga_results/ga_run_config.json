@@ -1,0 +1,127 @@
+{
+  "experiment": "DT51 – GA tối ưu TF-IDF + Logistic Regression",
+  "started_at": "2026-11-18T11:41:48.112822+07:00",
+  "finished_at": "2026-11-18T11:42:02.163664+07:00",
+  "execution_timestamp": "2026-11-18T11:41:48.112822+07:00",
+  "is_smoke_run": false,
+  "registered_parameters_preserved": true,
+  "random_seed": 45116,
+  "registered_parameters": {
+    "SEED": 45116,
+    "DATA_RATIO": 0.95,
+    "TEST_SIZE": 0.3,
+    "CV_FOLDS": 7,
+    "GA_POPULATION_SIZE": 40,
+    "GA_MUTATION_RATE": 0.01
+  },
+  "ga_config": {
+    "population_size": 40,
+    "mutation_rate": 0.01,
+    "crossover_rate": 0.8,
+    "generations": 12,
+    "elite_size": 2,
+    "tournament_size": 3,
+    "random_seed": 45116,
+    "patience": null,
+    "improvement_eps": 1e-06
+  },
+  "gene_spaces": {
+    "C": [
+      0.01,
+      0.1,
+      0.5,
+      1.0,
+      2.0,
+      5.0,
+      10.0,
+      20.0,
+      50.0
+    ],
+    "ngram_range": [
+      [
+        1,
+        1
+      ],
+      [
+        1,
+        2
+      ],
+      [
+        1,
+        3
+      ]
+    ],
+    "min_df": [
+      1,
+      2
+    ],
+    "sublinear_tf": [
+      false,
+      true
+    ],
+    "class_weight": [
+      null,
+      "balanced"
+    ]
+  },
+  "search_space_size": 216,
+  "chromosome_encoding": "Tuple 5 chỉ số nguyên (G1..G5) trỏ vào GENE_SPACES; giải mã thành dict siêu tham số rồi dựng Pipeline.",
+  "baseline_chromosome": [
+    3,
+    0,
+    0,
+    0,
+    0
+  ],
+  "dataset": {
+    "n_rows": 264,
+    "n_intents": 12,
+    "sha256": "2d2c00c640a9e4fbb977bca429a5aacf831597934712f6118ac779822fc8a9b6",
+    "raw_rows": 264,
+    "sampled_rows": 251,
+    "train_rows": 175,
+    "test_rows": 76,
+    "data_ratio": 0.95,
+    "test_size": 0.3,
+    "split_seed": 45116,
+    "source": "data/questions.csv"
+  },
+  "methodology": {
+    "fitness": "Macro F1 trung bình qua 7-fold StratifiedKFold (shuffle=True, random_state=45116) trên phân vùng Train; mỗi fold fit lại toàn bộ Pipeline (TF-IDF + Logistic Regression) nên không có TF-IDF fit toàn cục.",
+    "fold_policy": "Các fold được tính một lần bằng StratifiedKFold trên tập Train và dùng chung cho mọi ứng viên, bảo đảm so sánh công bằng.",
+    "test_isolation": "Tập Test chỉ được dùng sau khi GA kết thúc, để đánh giá mô hình cuối. FitnessEvaluator không nhận tham số Test.",
+    "selection": "Tournament selection, kích thước 3.",
+    "crossover": "Uniform crossover, xác suất 0.80, mỗi gen lấy ngẫu nhiên từ bố hoặc mẹ.",
+    "mutation": "Đột biến độc lập theo từng gen với xác suất 0.01; giá trị mới được chọn trong không gian giá trị của gen và khác giá trị cũ.",
+    "elitism": "Giữ 2 cá thể tốt nhất mỗi thế hệ, không làm tăng kích thước quần thể.",
+    "caching": "Mỗi nhiễm sắc thể chỉ được đánh giá một lần (cache theo tuple gen).",
+    "early_stopping": "Tuỳ chọn, mặc định tắt để chạy đủ 12 thế hệ đã đăng ký. Khi bật (--patience 5), dừng sau 5 thế hệ liên tiếp không cải thiện quá 1e-6."
+  },
+  "git_commit": "b36aee91ec7e087edbdab6668bbb880e1d0a1dc9",
+  "git_commit_note": "Commit của lần chạy thí nghiệm (trước khi commit kết quả).",
+  "environment": {
+    "python": "3.12.10",
+    "numpy": "1.26.4",
+    "pandas": "2.2.3",
+    "scikit-learn": "1.6.0",
+    "joblib": "1.5.3",
+    "matplotlib": "3.11.1"
+  },
+  "python_executable": "C:\\Users\\NAUTH\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "results": {
+    "generations_requested": 12,
+    "generations_executed": 12,
+    "stopping_reason": "max_generations",
+    "unique_fitness_evaluations": 79,
+    "total_fitness_evaluations": 480,
+    "ga_runtime_seconds": 13.854,
+    "script_runtime_seconds": 14.0504,
+    "failed_evaluations": 0
+  },
+  "artifacts": {
+    "ga_model": "Models\\ga_best_model.joblib",
+    "baseline_model": "Models\\best_model.joblib",
+    "output_dir": "ga_results"
+  }
+}

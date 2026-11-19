@@ -1,0 +1,67 @@
+{
+  "chromosome": [
+    7,
+    2,
+    0,
+    1,
+    1
+  ],
+  "chromosome_key": "7-2-0-1-1",
+  "genes": {
+    "C": 20.0,
+    "ngram_range": [
+      1,
+      3
+    ],
+    "min_df": 1,
+    "sublinear_tf": true,
+    "class_weight": "balanced"
+  },
+  "decoded_pipeline": {
+    "tfidf__ngram_range": [
+      1,
+      3
+    ],
+    "tfidf__min_df": 1,
+    "tfidf__sublinear_tf": true,
+    "logreg__C": 20.0,
+    "logreg__class_weight": "balanced",
+    "logreg__max_iter": 1000,
+    "logreg__solver": "lbfgs"
+  },
+  "fitness": {
+    "cv_macro_f1_mean": 0.786508,
+    "cv_macro_f1_std": 0.064725,
+    "fold_scores": [
+      0.666667,
+      0.794444,
+      0.780952,
+      0.833333,
+      0.724603,
+      0.858333,
+      0.847222
+    ]
+  },
+  "selection_basis": "Macro F1 trung bình 7-fold CV trên tập Train (không dùng Test).",
+  "discovered_at_generation": 0,
+  "baseline_chromosome": [
+    3,
+    0,
+    0,
+    0,
+    0
+  ],
+  "baseline_fitness": {
+    "cv_macro_f1_mean": 0.778231,
+    "cv_macro_f1_std": 0.062774,
+    "fold_scores": [
+      0.669444,
+      0.805556,
+      0.780952,
+      0.780952,
+      0.724603,
+      0.8,
+      0.886111
+    ]
+  }
+}

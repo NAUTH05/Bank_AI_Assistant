@@ -5,3 +5,14 @@ venv/
 .env
 .env.*
 !.env.example
+
+# Bộ nhớ đệm của công cụ (không phải bằng chứng thí nghiệm)
+.pytest_cache/
+.ipynb_checkpoints/
+
+# Kết quả smoke test không dùng làm bằng chứng báo cáo
+ga_results_smoke/
+
+# Tài liệu nội bộ và bộ nhớ phiên làm việc: giữ ở máy, không đưa lên Git
+GA_EXPERIMENT.md
+.workbuddy-ai/

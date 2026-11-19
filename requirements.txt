@@ -1,0 +1,23 @@
+# DT51 – Bank AI Assistant
+# Môi trường tham chiếu: Python 3.12.10 (thí nghiệm GA chạy trên Python 3.12.10,
+# scikit-learn 1.6.0, numpy 1.26.4, pandas 2.2.3, matplotlib 3.11.1, joblib 1.5.3).
+# Cài đặt: python -m pip install -r requirements.txt
+
+numpy>=1.26,<2.0
+pandas>=2.2,<3.0
+scikit-learn>=1.6,<2.0
+matplotlib>=3.9
+joblib>=1.4
+scipy>=1.13
+
+# Notebook DT51.ipynb (bao gồm mục 7 – thí nghiệm GA)
+jupyter>=1.0
+ipykernel>=6.29
+nbformat>=5.10
+nbclient>=0.10
+
+# Giao diện chatbot (app.py)
+gradio>=4.44
+
+# Kiểm thử tự động
+pytest>=8.0

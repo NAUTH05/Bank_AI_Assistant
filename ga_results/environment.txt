@@ -1,0 +1,13 @@
+# Môi trường thực thi thí nghiệm GA (DT51)
+platform: Windows-11-10.0.26200-SP0
+machine: AMD64
+processor: Intel64 Family 6 Model 141 Stepping 1, GenuineIntel
+python_executable: C:\Users\NAUTH\AppData\Local\Programs\Python\Python312\python.exe
+
+# Phiên bản gói chính
+python==3.12.10
+numpy==1.26.4
+pandas==2.2.3
+scikit-learn==1.6.0
+joblib==1.5.3
+matplotlib==3.11.1
